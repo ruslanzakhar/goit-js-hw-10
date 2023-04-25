@@ -33,18 +33,17 @@ function onInputChange (e){
             countrylist.innerHTML = makeCountryList(data);
         }else if(data.length === 1){
             countryInfo.innerHTML = makeCountryinfo(data);
-        }else if(data.status === 404){
-            console.log(data)
-            Notiflix.Notify.failure("Oops, there is no country with that name");
-        }
+        }  
         })
-        .catch(error =>{error});
+        .catch(error => {
+            if (error.message === '404'){
+            
+           Notiflix.Notify.failure("Oops, there is no country with that name");
+            console.log(error)
+        }});
 
     }
 
-   
-    
-    
     function makeCountryList(data){
         return data.map(({name, flags}) =>`<li class = "country-cards">
         <img src="${flags.png}" alt="${name.official}" width="50" height ="30">
